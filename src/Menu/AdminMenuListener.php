@@ -25,7 +25,7 @@ final class AdminMenuListener
         ;
 
         $newSubmenu->addChild('sylius_admin_akeneo_product_filter_rules', [
-                'route' => 'sylius_akeneo_connector_product_filter_rules',
+                'route' => 'akeneo_admin_product_filters_rules_index',
             ])
             ->setAttribute('type', 'link')
             ->setLabel('sylius.ui.admin.akeneo.product_filter_rules.title')

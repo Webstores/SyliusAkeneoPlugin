@@ -23,3 +23,22 @@ sylius_grid:
                         type: update
                     delete:
                         type: delete
+        akeneo_admin_product_filter_rule:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: Synolia\SyliusAkeneoPlugin\Entity\ProductFiltersRules
+            fields:
+                channel:
+                    type: string
+                    label: akeneo.ui.akeneo_attribute_channel
+                    sortable: ~
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update
+                    delete:
+                        type: delete
