@@ -58,6 +58,11 @@ sylius:
                     differ: Differ
                     between: Between
                     since_last_x_days: Since last x days
+                    create:
+                        title: Create product filter rule
+                    update:
+                        title: Update product filter rule
+                        not_found: Product filter rule not found
                 categories:
                     title: Categories
                     subtitle: Categories configuration
@@ -86,7 +91,9 @@ akeneo:
     ui:
         attribute_type_mappings: 'Akeneo Attribute Type Mappings'
         attribute_type: 'Attribute Type'
+        akeneo_attribute_channel: 'Akeneo Channel'
         akeneo_attribute_type: 'Akeneo Attribute'
         admin:
             authentication_successfully_succeeded: Authenticated successfully succeeded
             changes_successfully_saved: Changes successfully saved
+        product_filters_rules: Product filter rules

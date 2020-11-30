@@ -10,6 +10,7 @@ services:
 
     Synolia\SyliusAkeneoPlugin\Controller\:
         resource: '../../Controller'
+        exclude: '../../{ProductFilterRulesController.php}'
         tags: ['controller.service_arguments']
 
     Synolia\SyliusAkeneoPlugin\Fixture\:
@@ -77,3 +78,12 @@ services:
     Synolia\SyliusAkeneoPlugin\Form\Type\AttributeTypeChoiceType:
         arguments:
             - '%sylius.attribute.attribute_types%'
+
+    Synolia\SyliusAkeneoPlugin\Controller\ProductFilterRulesController:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@akeneo.repository.product_filters_rules'
+            - '@akeneo.repository.api_configuration'
+            - '@akeneo.factory.product_filters_rules'
+            - '@session.flash_bag'
+            - '@translator'

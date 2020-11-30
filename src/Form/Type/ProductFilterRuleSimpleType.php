@@ -6,6 +6,7 @@ namespace Synolia\SyliusAkeneoPlugin\Form\Type;
 
 use Akeneo\Pim\ApiClient\Search\Operator;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -84,10 +85,6 @@ final class ProductFilterRuleSimpleType extends AbstractType
             ])
             ->add('exclude_families', FamiliesChoiceType::class, [
                 'label' => 'sylius.ui.admin.akeneo.product_filter_rules.families',
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'sylius.ui.save',
-                'attr' => ['class' => 'ui primary button'],
             ])
         ;
     }
