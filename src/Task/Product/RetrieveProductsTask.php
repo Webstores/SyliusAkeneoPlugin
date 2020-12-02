@@ -8,6 +8,7 @@ use Akeneo\Pim\ApiClient\Pagination\Page;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Synolia\SyliusAkeneoPlugin\Exceptions\NoProductFiltersConfigurationException;
 use Synolia\SyliusAkeneoPlugin\Filter\ProductFilter;
 use Synolia\SyliusAkeneoPlugin\Logger\Messages;
 use Synolia\SyliusAkeneoPlugin\Payload\PipelinePayloadInterface;
@@ -53,7 +54,11 @@ final class RetrieveProductsTask implements AkeneoTaskInterface
         $this->logger->debug(self::class);
         $this->logger->notice(Messages::retrieveFromAPI($payload->getType()));
 
-        $queryParameters = $this->productFilter->getProductFilters();
+        $queryParameters = $this->productFilter->getProductFilters($payload->getAkeneoChannel());
+        if (0 === count($queryParameters)) {
+            throw new NoProductFiltersConfigurationException(sprintf('Product filters not configured for Akeneo channel: %s', $payload->getAkeneoChannel()));
+        }
+
         $queryParameters['pagination_type'] = 'search_after';
 
         /** @var \Akeneo\Pim\ApiClient\Pagination\PageInterface|null $resources */
