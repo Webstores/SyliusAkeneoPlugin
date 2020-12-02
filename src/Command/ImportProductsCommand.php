@@ -8,8 +8,10 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Command\LockableTrait;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Synolia\SyliusAkeneoPlugin\Client\ClientFactory;
+use Synolia\SyliusAkeneoPlugin\Exceptions\NoProductFiltersConfigurationException;
 use Synolia\SyliusAkeneoPlugin\Factory\ProductPipelineFactory;
 use Synolia\SyliusAkeneoPlugin\Logger\Messages;
 use Synolia\SyliusAkeneoPlugin\Payload\Product\ProductPayload;
@@ -47,6 +49,7 @@ final class ImportProductsCommand extends Command
     protected function configure(): void
     {
         $this->setDescription(self::DESCRIPTION);
+        $this->addOption('channels', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Akeneo channel code');
     }
 
     /**
@@ -62,13 +65,28 @@ final class ImportProductsCommand extends Command
             return 0;
         }
 
+        $channels = $input->getOption('channels');
+        if (!is_array($channels) || 0 === count($channels)) {
+            $channelsApi = $this->clientFactory->createFromApiCredentials()->getChannelApi()->all();
+            $channels = [];
+            foreach ($channelsApi as $channelApi) {
+                $channels[$channelApi['code']] = $channelApi['code'];
+            }
+        }
+
         $this->logger->notice(self::$defaultName);
         /** @var \League\Pipeline\Pipeline $productPipeline */
         $productPipeline = $this->productPipelineFactory->create();
 
-        /** @var \Synolia\SyliusAkeneoPlugin\Payload\Product\ProductPayload $productPayload */
-        $productPayload = new ProductPayload($this->clientFactory->createFromApiCredentials());
-        $productPipeline->process($productPayload);
+        foreach ($channels as $channel) {
+            /** @var \Synolia\SyliusAkeneoPlugin\Payload\Product\ProductPayload $productPayload */
+            $productPayload = new ProductPayload($this->clientFactory->createFromApiCredentials(), $channel);
+            try {
+                $productPipeline->process($productPayload);
+            } catch (NoProductFiltersConfigurationException $exception) {
+                $this->logger->warning($exception->getMessage());
+            }
+        }
 
         $this->logger->notice(Messages::endOfCommand(self::$defaultName));
         $this->release();

@@ -128,7 +128,7 @@ final class CreateSimpleProductEntitiesTask extends AbstractCreateProductEntitie
         $this->logger->notice(Messages::createOrUpdate($this->type));
 
         /** @var \Synolia\SyliusAkeneoPlugin\Entity\ProductFiltersRules $filters */
-        $filters = $this->productFiltersRulesRepository->findOneBy([]);
+        $filters = $this->productFiltersRulesRepository->findOneByChannel($payload->getAkeneoChannel());
         if (!$filters instanceof ProductFiltersRules) {
             throw new NoProductFiltersConfigurationException('Product filters must be configured before importing product attributes.');
         }

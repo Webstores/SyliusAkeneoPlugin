@@ -9,6 +9,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Command\LockableTrait;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Synolia\SyliusAkeneoPlugin\Client\ClientFactory;
 use Synolia\SyliusAkeneoPlugin\Factory\FamilyPipelineFactory;
@@ -48,6 +49,7 @@ final class ImportFamiliesCommand extends Command
     protected function configure(): void
     {
         $this->setDescription(self::DESCRIPTION);
+        $this->addOption('channels', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Akeneo channel code');
     }
 
     /**
@@ -63,12 +65,23 @@ final class ImportFamiliesCommand extends Command
             return 0;
         }
 
+        $channels = $input->getOption('channels');
+        if (!is_array($channels) || 0 === count($channels)) {
+            $channelsApi = $this->clientFactory->createFromApiCredentials()->getChannelApi()->all();
+            $channels = [];
+            foreach ($channelsApi as $channelApi) {
+                $channels[$channelApi['code']] = $channelApi['code'];
+            }
+        }
+
         $this->logger->notice(self::$defaultName);
         /** @var Pipeline $familyPipeline */
         $familyPipeline = $this->familyPipelineFactory->create();
 
-        $productModelPayload = new ProductModelPayload($this->clientFactory->createFromApiCredentials());
-        $familyPipeline->process($productModelPayload);
+        foreach ($channels as $channel) {
+            $productModelPayload = new ProductModelPayload($this->clientFactory->createFromApiCredentials(), $channel);
+            $familyPipeline->process($productModelPayload);
+        }
 
         $this->logger->notice(Messages::endOfCommand(self::$defaultName));
         $this->release();

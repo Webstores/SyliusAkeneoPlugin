@@ -16,6 +16,15 @@ akeneo_admin_attribute_type_routing:
                 icon: 'file image outline' # choose an icon that will be displayed next to the subheader
     type: sylius.resource
 
+sylius_admin_product_filter_rule:
+    resource: |
+        alias: akeneo.product_filters_rules
+        except: ['show']
+        section: admin
+        templates: SyliusAdminBundle:Crud
+        grid: akeneo_admin_product_filter_rule
+    type: sylius.resource
+    prefix: akeneo
 akeneo_admin_channel_configuration_routing:
     resource: |
         alias: akeneo.channel_configuration

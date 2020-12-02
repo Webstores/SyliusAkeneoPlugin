@@ -168,7 +168,7 @@ final class AddOrUpdateProductModelTask implements AkeneoTaskInterface
         $this->payload = $payload;
 
         /** @var \Synolia\SyliusAkeneoPlugin\Entity\ProductFiltersRules $filters */
-        $filters = $this->productFiltersRulesRepository->findOneBy([]);
+        $filters = $this->productFiltersRulesRepository->findOneByChannel($payload->getAkeneoChannel());
         if (!$filters instanceof ProductFiltersRules) {
             throw new NoProductFiltersConfigurationException('Product filters must be configured before importing product attributes.');
         }

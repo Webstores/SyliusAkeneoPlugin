@@ -1,21 +1,22 @@
 {% extends '@SynoliaSyliusAkeneoPlugin/Admin/layout.html.twig' %}
 
+{% import '@SyliusUi/Macro/headers.html.twig' as headers %}
+
 {% form_theme advanced_form '@SyliusUi/Form/theme.html.twig' %}
 {% form_theme simple_form '@SyliusUi/Form/theme.html.twig' %}
 
-{% import '@SyliusUi/Macro/headers.html.twig' as headers %}
-
-{% block title %}{{ 'sylius.ui.admin.akeneo.product_filter_rules.title'|trans }} {{ parent() }}{% endblock %}
+{% block title %}{{ 'sylius.ui.admin.akeneo.product_filter_rules.create.title'|trans }} {{ parent() }}{% endblock %}
 
 {% block content %}
     {{ headers.default(
-        'sylius.ui.admin.akeneo.product_filter_rules.title'|trans,
-        'cogs',
+        'sylius.ui.admin.akeneo.product_filter_rules.create.title'|trans,
+        'plus',
         'sylius.ui.admin.akeneo.product_filter_rules.subtitle'|trans
     ) }}
     {% block breadcrumb %}
         {% set breadcrumbs = breadcrumbs|merge([
-            { label: 'sylius.ui.admin.akeneo.product_filter_rules.title'|trans }
+            { label: 'sylius.ui.admin.akeneo.product_filter_rules.title'|trans },
+            { label: 'sylius.ui.add'|trans }
         ]) %}
         {{ parent() }}
     {% endblock %}
@@ -50,6 +51,7 @@
                 <span class="ui pointing below label" style="display: none;">{{ 'sylius.ui.admin.akeneo.product_filter_rules.families_help'|trans }}</span>
                 {{ form_row(simple_form.exclude_families) }}
             </div>
+            {% include '@SyliusUi/Form/Buttons/_create.html.twig' with { 'paths': {'cancel': path('akeneo_admin_product_filters_rules_index') }} %}
             {{ form_end(simple_form) }}
         </div>
         <div class="ui segment togglable" style="display: none;">

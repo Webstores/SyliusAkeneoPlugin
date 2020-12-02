@@ -23,12 +23,16 @@ final class ProductPayload extends AbstractPayload
     /** @var ProductItemPayload */
     private $configurableProductPayload;
 
-    public function __construct(AkeneoPimClientInterface $akeneoPimClient)
+    /** @var string */
+    private $akeneoChannel;
+
+    public function __construct(AkeneoPimClientInterface $akeneoPimClient, string $akeneoChannel)
     {
         parent::__construct($akeneoPimClient);
 
         $this->simpleProductPayload = new ProductItemPayload($akeneoPimClient);
         $this->configurableProductPayload = new ProductItemPayload($akeneoPimClient);
+        $this->akeneoChannel = $akeneoChannel;
     }
 
     /**
@@ -55,5 +59,10 @@ final class ProductPayload extends AbstractPayload
     public function getConfigurableProductPayload(): ProductItemPayload
     {
         return $this->configurableProductPayload;
+    }
+
+    public function getAkeneoChannel(): string
+    {
+        return $this->akeneoChannel;
     }
 }
