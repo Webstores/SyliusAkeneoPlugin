@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Synolia\SyliusAkeneoPlugin\Payload\ProductModel;
 
+use Akeneo\Pim\ApiClient\AkeneoPimClientInterface;
 use Akeneo\Pim\ApiClient\Pagination\ResourceCursorInterface;
 use Synolia\SyliusAkeneoPlugin\Payload\AbstractPayload;
 
@@ -18,6 +19,16 @@ final class ProductModelPayload extends AbstractPayload
 
     /** @var \Akeneo\Pim\ApiClient\Pagination\ResourceCursorInterface|null */
     private $modelResources;
+
+    /** @var string */
+    private $akeneoChannel;
+
+    public function __construct(AkeneoPimClientInterface $akeneoPimClient, string $akeneoChannel)
+    {
+        parent::__construct($akeneoPimClient);
+
+        $this->akeneoChannel = $akeneoChannel;
+    }
 
     public function getResources(): ?ResourceCursorInterface
     {
@@ -39,5 +50,10 @@ final class ProductModelPayload extends AbstractPayload
         $this->modelResources = $modelResources;
 
         return $this;
+    }
+
+    public function getAkeneoChannel(): string
+    {
+        return $this->akeneoChannel;
     }
 }
