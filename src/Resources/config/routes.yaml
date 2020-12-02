@@ -24,4 +24,4 @@ sylius_admin_product_filter_rule:
         templates: SyliusAdminBundle:Crud
         grid: akeneo_admin_product_filter_rule
     type: sylius.resource
-    prefix: akeneo
+    prefix: /akeneo
