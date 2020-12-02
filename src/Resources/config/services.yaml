@@ -70,6 +70,17 @@ services:
         arguments:
             - '@Synolia\SyliusAkeneoPlugin\Entity\Setting'
 
+    Synolia\SyliusAkeneoPlugin\Repository\ChannelConfigurationRepository:
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@akeneo.channel_configuration_class_metadata'
+
+    akeneo.channel_configuration_class_metadata:
+        class: 'Doctrine\Common\Persistence\Mapping\ClassMetadata'
+        factory: ['@doctrine.orm.entity_manager', getClassMetadata]
+        arguments:
+            - '@Synolia\SyliusAkeneoPlugin\Entity\ChannelConfiguration'
+
     Akeneo\Pim\ApiClient\AkeneoPimClientInterface:
         factory: ['@Synolia\SyliusAkeneoPlugin\Client\ClientFactory', 'createFromApiCredentials']
         lazy: true
@@ -77,3 +88,7 @@ services:
     Synolia\SyliusAkeneoPlugin\Form\Type\AttributeTypeChoiceType:
         arguments:
             - '%sylius.attribute.attribute_types%'
+
+    Synolia\SyliusAkeneoPlugin\Form\Type\ChannelConfigurationType:
+        arguments:
+            - '%akeneo.model.channel_configuration.class%'

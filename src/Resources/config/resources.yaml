@@ -46,3 +46,9 @@ sylius_resource:
             classes:
                 model: Synolia\SyliusAkeneoPlugin\Entity\ProductFiltersRules
                 repository: Synolia\SyliusAkeneoPlugin\Repository\ProductFiltersRulesRepository
+        akeneo.channel_configuration:
+            driver: doctrine/orm
+            classes:
+                model: Synolia\SyliusAkeneoPlugin\Entity\ChannelConfiguration
+                repository: Synolia\SyliusAkeneoPlugin\Repository\ChannelConfigurationRepository
+                form: Synolia\SyliusAkeneoPlugin\Form\Type\ChannelConfigurationType

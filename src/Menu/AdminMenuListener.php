@@ -55,5 +55,13 @@ final class AdminMenuListener
             ->setLabel('sylius.ui.admin.akeneo.attributes.title')
             ->setLabelAttribute('icon', 'configure')
         ;
+
+        $newSubmenu->addChild('sylius_admin_akeneo_channel_configuration', [
+                'route' => 'akeneo_admin_channel_configuration_index',
+            ])
+            ->setAttribute('type', 'link')
+            ->setLabel('sylius.ui.admin.akeneo.channels.title')
+            ->setLabelAttribute('icon', 'configure')
+        ;
     }
 }

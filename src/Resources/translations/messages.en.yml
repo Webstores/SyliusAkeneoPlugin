@@ -80,6 +80,9 @@ sylius:
                 attributes:
                     title: Attributes
                     subtitle: Attributes configuration
+                channels:
+                    title: Channels
+                    subtitle: Channels configuration
                 medias:
                     medias: Medias
 akeneo:
@@ -87,6 +90,11 @@ akeneo:
         attribute_type_mappings: 'Akeneo Attribute Type Mappings'
         attribute_type: 'Attribute Type'
         akeneo_attribute_type: 'Akeneo Attribute'
+        akeneo_channel: 'Akeneo Channel'
+        sylius_channel: 'Sylius Channel'
+        channel_configurations: 'Channel configurations'
+        new_channel_configuration: 'New channel configuration'
+        edit_channel_configuration: 'Edit channel configuration'
         admin:
             authentication_successfully_succeeded: Authenticated successfully succeeded
             changes_successfully_saved: Changes successfully saved
