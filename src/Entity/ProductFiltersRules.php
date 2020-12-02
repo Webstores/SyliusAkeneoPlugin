@@ -90,7 +90,7 @@ class ProductFiltersRules implements ResourceInterface
 
     /**
      * @var string
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      */
     private $channel = '';
 
