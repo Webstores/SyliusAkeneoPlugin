@@ -67,7 +67,7 @@ final class EnableDisableProductModelsTask implements AkeneoTaskInterface
                         continue;
                     }
 
-                    $this->productChannelEnabler->enableChannelForProduct($product, $resource);
+                    $this->productChannelEnabler->enableChannelForProduct($product, $payload->getAkeneoChannel());
                 } catch (\Throwable $throwable) {
                     $this->logger->warning($throwable->getMessage());
                 }
