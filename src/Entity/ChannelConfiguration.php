@@ -23,13 +23,13 @@ class ChannelConfiguration implements ResourceInterface
     private $id;
 
     /**
-     * @var string|null
-     * @ORM\Column(type="string", name="akeneoChannelCode")
+     * @var string
+     * @ORM\Column(type="string", name="akeneoChannelCode", nullable=false)
      */
     private $akeneoChannelCode;
 
     /**
-     * @var ChannelInterface|null
+     * @var ChannelInterface
      * @ORM\ManyToOne(targetEntity="Sylius\Component\Channel\Model\Channel")
      * @ORM\JoinColumn(referencedColumnName="id", fieldName="syliusChannelId", nullable=false, name="syliusChannelId")
      */
