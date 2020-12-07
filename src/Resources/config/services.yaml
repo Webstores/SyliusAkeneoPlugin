@@ -101,3 +101,6 @@ services:
     Synolia\SyliusAkeneoPlugin\Form\Type\ChannelConfigurationType:
         arguments:
             - '%akeneo.model.channel_configuration.class%'
+
+    Synolia\SyliusAkeneoPlugin\Service\ProductChannelEnablerInterface:
+        alias: Synolia\SyliusAkeneoPlugin\Service\ProductChannelEnabler
