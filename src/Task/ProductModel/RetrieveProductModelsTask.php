@@ -6,6 +6,7 @@ namespace Synolia\SyliusAkeneoPlugin\Task\ProductModel;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Synolia\SyliusAkeneoPlugin\Exceptions\NoProductFiltersConfigurationException;
 use Synolia\SyliusAkeneoPlugin\Filter\ProductFilter;
 use Synolia\SyliusAkeneoPlugin\Logger\Messages;
 use Synolia\SyliusAkeneoPlugin\Payload\PipelinePayloadInterface;
@@ -50,7 +51,10 @@ final class RetrieveProductModelsTask implements AkeneoTaskInterface
      */
     public function __invoke(PipelinePayloadInterface $payload): PipelinePayloadInterface
     {
-        $queryParameters = $this->productFilter->getProductModelFilters();
+        $queryParameters = $this->productFilter->getProductModelFilters($payload->getAkeneoChannel());
+        if (0 === count($queryParameters)) {
+            throw new NoProductFiltersConfigurationException(sprintf('Product filters not configured for Akeneo channel: %s', $payload->getAkeneoChannel()));
+        }
 
         $this->logger->debug(self::class);
         $this->logger->notice(Messages::retrieveFromAPI($payload->getType()));
@@ -81,7 +85,7 @@ final class RetrieveProductModelsTask implements AkeneoTaskInterface
             $this->logger->warning(Messages::noCodeToImport($payload->getType(), $noCodeCount));
         }
 
-        $payload = new ProductModelPayload($payload->getAkeneoPimClient());
+        $payload = new ProductModelPayload($payload->getAkeneoPimClient(), $payload->getAkeneoChannel());
 
         return $payload;
     }

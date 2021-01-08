@@ -9,13 +9,20 @@ use Synolia\SyliusAkeneoPlugin\Entity\ProductFiltersRules;
 
 final class ProductFiltersRulesRepository extends EntityRepository
 {
-    public function getProductFiltersRules(): ?ProductFiltersRules
+    public function findOneByChannel(string $channelCode): ?ProductFiltersRules
     {
-        $productfiltersRules = $this->findAll();
-        if (empty($productfiltersRules)) {
-            return null;
+        $productFilterRules = $this->createQueryBuilder('pfr')
+            ->where('pfr.channel = :channel')
+            ->setParameter('channel', $channelCode)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+            ;
+
+        if (isset($productFilterRules[0]) && $productFilterRules[0] instanceof ProductFiltersRules) {
+            return $productFilterRules[0];
         }
 
-        return $productfiltersRules[0];
+        return null;
     }
 }

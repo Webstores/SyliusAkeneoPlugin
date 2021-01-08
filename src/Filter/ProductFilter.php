@@ -11,6 +11,7 @@ use Synolia\SyliusAkeneoPlugin\Entity\ProductFiltersRules;
 use Synolia\SyliusAkeneoPlugin\Enum\ProductFilterStatusEnum;
 use Synolia\SyliusAkeneoPlugin\Form\Type\ProductFilterRuleAdvancedType;
 use Synolia\SyliusAkeneoPlugin\Form\Type\ProductFilterRuleSimpleType;
+use Synolia\SyliusAkeneoPlugin\Repository\ProductFiltersRulesRepository;
 use Synolia\SyliusAkeneoPlugin\Service\SyliusAkeneoLocaleCodeProvider;
 
 final class ProductFilter
@@ -31,22 +32,22 @@ final class ProductFilter
         'created',
     ];
 
-    /** @var EntityRepository */
+    /** @var ProductFiltersRulesRepository */
     private $productFiltersRulesRepository;
 
     /** @var \Synolia\SyliusAkeneoPlugin\Service\SyliusAkeneoLocaleCodeProvider */
     private $syliusAkeneoLocaleCodeProvider;
 
-    public function __construct(EntityRepository $productFiltersRulesRepository, SyliusAkeneoLocaleCodeProvider $syliusAkeneoLocaleCodeProvider)
+    public function __construct(ProductFiltersRulesRepository $productFiltersRulesRepository, SyliusAkeneoLocaleCodeProvider $syliusAkeneoLocaleCodeProvider)
     {
         $this->productFiltersRulesRepository = $productFiltersRulesRepository;
         $this->syliusAkeneoLocaleCodeProvider = $syliusAkeneoLocaleCodeProvider;
     }
 
-    public function getProductModelFilters(): array
+    public function getProductModelFilters(string $akeneoChannel): array
     {
         /** @var ProductFiltersRules $productFilterRules */
-        $productFilterRules = $this->productFiltersRulesRepository->findOneBy([]);
+        $productFilterRules = $this->productFiltersRulesRepository->findOneByChannel($akeneoChannel);
         if (!$productFilterRules instanceof ProductFiltersRules) {
             return [];
         }
@@ -75,10 +76,10 @@ final class ProductFilter
         return $queryParameters;
     }
 
-    public function getProductFilters(): array
+    public function getProductFilters(string $akeneoChannel): array
     {
         /** @var ProductFiltersRules $productFilterRules */
-        $productFilterRules = $this->productFiltersRulesRepository->findOneBy([]);
+        $productFilterRules = $this->productFiltersRulesRepository->findOneByChannel($akeneoChannel);
         if (!$productFilterRules instanceof ProductFiltersRules) {
             return [];
         }

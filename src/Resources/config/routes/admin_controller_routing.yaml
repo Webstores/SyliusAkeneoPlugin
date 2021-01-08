@@ -4,11 +4,17 @@ api_configuration:
     defaults:
         _controller: Synolia\SyliusAkeneoPlugin\Controller\ApiConfigurationController
 
-product_filter_rules:
-    path: /product_filter/rules
+akeneo_admin_product_filters_rules_create:
+    path: /product-filters-rules/new
     methods: [GET|POST]
     defaults:
-        _controller: Synolia\SyliusAkeneoPlugin\Controller\ProductFilterRulesController
+        _controller: Synolia\SyliusAkeneoPlugin\Controller\ProductFilterRulesController::createAction
+
+akeneo_admin_product_filters_rules_update:
+    path: /product-filters-rules/{id}/edit
+    methods: [GET|POST]
+    defaults:
+        _controller: Synolia\SyliusAkeneoPlugin\Controller\ProductFilterRulesController::updateAction
 
 categories:
     path: /categories
