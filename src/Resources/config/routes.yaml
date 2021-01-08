@@ -24,4 +24,15 @@ sylius_admin_product_filter_rule:
         templates: SyliusAdminBundle:Crud
         grid: akeneo_admin_product_filter_rule
     type: sylius.resource
+    prefix: akeneo
+
+akeneo_admin_channel_configuration_routing:
+    resource: |
+        alias: akeneo.channel_configuration
+        section: admin
+        templates: SyliusAdminBundle:Crud
+        except: ['show']
+        redirect: update
+        grid: akeneo_admin_channel_configuration
+    type: sylius.resource
     prefix: /akeneo

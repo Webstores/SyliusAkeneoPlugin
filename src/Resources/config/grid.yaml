@@ -42,3 +42,26 @@ sylius_grid:
                         type: update
                     delete:
                         type: delete
+        akeneo_admin_channel_configuration:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: Synolia\SyliusAkeneoPlugin\Entity\ChannelConfiguration
+            fields:
+                sylius_channel:
+                    type: string
+                    label: akeneo.ui.sylius_channel
+                    sortable: ~
+                akeneo_channel_code:
+                    type: string
+                    label: akeneo.ui.akeneo_channel
+                    sortable: ~
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update
+                    delete:
+                        type: delete

@@ -14,7 +14,7 @@ use Synolia\SyliusAkeneoPlugin\Exceptions\NoProductConfigurationException;
 use Synolia\SyliusAkeneoPlugin\Repository\ChannelRepository;
 use Synolia\SyliusAkeneoPlugin\Repository\ProductConfigurationRepository;
 
-final class ProductChannelEnabler
+final class ProductChannelEnabler implements ProductChannelEnablerInterface
 {
     /** @var \Synolia\SyliusAkeneoPlugin\Repository\ChannelRepository */
     private $channelRepository;
@@ -32,7 +32,7 @@ final class ProductChannelEnabler
         ChannelRepository $channelRepository,
         ProductConfigurationRepository $productConfigurationRepository,
         LoggerInterface $akeneoLogger,
-    EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager
     ) {
         $this->channelRepository = $channelRepository;
         $this->productConfigurationRepository = $productConfigurationRepository;
@@ -40,7 +40,7 @@ final class ProductChannelEnabler
         $this->entityManager = $entityManager;
     }
 
-    public function enableChannelForProduct(ProductInterface $product, array $resource): void
+    public function enableChannelForProduct(ProductInterface $product, array $resource, string $akeneoChannel): void
     {
         try {
             $enabledChannels = $this->getEnabledChannelsAttributeData($product, $resource);
