@@ -30,7 +30,7 @@ class ChannelConfiguration implements ResourceInterface
 
     /**
      * @var ChannelInterface
-     * @ORM\ManyToOne(targetEntity="Sylius\Component\Channel\Model\Channel")
+     * @ORM\ManyToOne(targetEntity="Sylius\Component\Core\Model\Channel")
      * @ORM\JoinColumn(referencedColumnName="id", fieldName="syliusChannelId", nullable=false, name="syliusChannelId")
      */
     protected $syliusChannel;
