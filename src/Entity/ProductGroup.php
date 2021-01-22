@@ -39,7 +39,7 @@ class ProductGroup implements ResourceInterface
 
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="Sylius\Component\Core\Model\Product")
+     * @ORM\ManyToMany(targetEntity="Sylius\Component\Core\Model\ProductInterface")
      * @JoinTable(name="akeneo_productgroup_product")
      */
     private $products;
